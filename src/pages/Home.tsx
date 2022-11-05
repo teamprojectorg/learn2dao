@@ -78,7 +78,6 @@ const Home = () => {
   return (
     <div style={{ padding: "1rem" }}>
       <DisplayBox $maxWidth="50rem" className="center mb5">
-        <CryptoLogos chain="ethereum" size="32px" />
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 1</h2>
         <LineWithBarGraph
           data={randomData}
@@ -95,7 +94,6 @@ const Home = () => {
         />
       </DisplayBox>
       <DisplayBox $maxWidth="50rem" className="center mb5">
-        <CryptoLogos chain="ethereum" size="32px" />
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 2</h2>
         <AreaGraph
           data={randomData}
@@ -111,7 +109,6 @@ const Home = () => {
         />
       </DisplayBox>
       <DisplayBox $maxWidth="50rem" className="center">
-        <CryptoLogos chain="ethereum" size="32px" />
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 2</h2>
         <BarGraph
           data={randomData}

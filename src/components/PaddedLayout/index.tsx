@@ -42,7 +42,7 @@ const LayoutContainerDiv = styled.div`
     position: fixed;
     inset: 0 0 auto 0;
     background: white;
-    z-index: 999999;
+    z-index: 999998;
   }
 
   // Main content

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Flex from "../Flex";
 import PhantomButton from "../PhantomButton";
 import { useSlidingMenuContext } from "./SlidingMenu";
-import { Button } from "@web3uikit/core";
+import { Button, CryptoLogos } from "@web3uikit/core";
 import { WidthGeqOnly } from "../Width";
 
 const Navigation = () => {
@@ -14,7 +14,8 @@ const Navigation = () => {
         <PhantomButton onClick={() => openMenu()}>
           <Menu fill="#000" width={18} height={18} />
         </PhantomButton>
-        <h3 id="nav-title">ETH SF 2022 Project</h3>
+        <CryptoLogos chain="ethereum" size="20px" />
+        <h3 id="nav-title">Learn 2 DAO</h3>
       </Flex>
       <WidthGeqOnly $minWidth={750}>
         <Button

@@ -101,8 +101,7 @@ const MenuWindowContainerDiv = styled.div`
   inset: 0 auto 0 0;
   background: white;
   padding: 1.5rem 1.5rem;
-  z-index: 999;
-
+  z-index: 999999;
   width: ${MENU_WINDOW_WIDTH_PX}px;
   @media only screen and (max-width: ${TABLET_OR_MOBILE_MAX_WIDTH_PX}px) {
     width: calc(100% - 2 * 1.5rem);
