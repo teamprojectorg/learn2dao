@@ -12,7 +12,9 @@ import storeContent from "../utils/storeIPFS";
 import DisplayBox from "../components/DisplayBox";
 import { CryptoLogos } from "@web3uikit/core";
 import console from "console";
-import Chart from "../components/Chart";
+import LineGraph from "../components/Graphs/LineGraph";
+import spacedTimestamps from "../components/Graphs/spacedTimestamps";
+import LineWithBarGraph from "../components/Graphs/LineWithBarGraph";
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -76,7 +78,19 @@ const Home = () => {
       <DisplayBox className="center">
         <CryptoLogos chain="ethereum" size="32px" />
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 1</h2>
-        <Chart data={randomData} />
+        <LineWithBarGraph
+          data={randomData}
+          height={300}
+          line={{ dataKey: "temperature" }}
+          bar={{ dataKey: "temperature", size: 30 }}
+          xAxis={{
+            label: "Time",
+            dataKey: "time",
+            ticks: spacedTicks,
+            formatter: (tick) => moment(tick).format("L"),
+          }}
+          yAxis={{ label: "Temperature" }}
+        />
       </DisplayBox>
     </div>
   );
