@@ -1,20 +1,14 @@
-import { useState, useEffect } from "react";
-import React from "react";
-import axios from "axios";
-import moment from "moment";
-import { CONFIG } from "../config";
-import getTokenHolders from "../api/v1/getTokenHolders";
-import getPortfolio from "../api/v1/getPortfolio";
-import getSpotPrice from "../api/v1/getSpotPrices";
-import TimeSeries from "../components/TimeseriesTable";
-import retrieveFiles from "../utils/retrieveIPFS";
-import storeContent from "../utils/storeIPFS";
-import DisplayBox from "../components/DisplayBox";
 import { CryptoLogos } from "@web3uikit/core";
 import console from "console";
-import LineGraph from "../components/Graphs/LineGraph";
-import spacedTimestamps from "../components/Graphs/spacedTimestamps";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import getSpotPrice from "../api/v1/getSpotPrices";
+import DisplayBox from "../components/DisplayBox";
 import LineWithBarGraph from "../components/Graphs/LineWithBarGraph";
+import spacedTimestamps from "../components/Graphs/spacedTimestamps";
+import { CONFIG } from "../config";
+import retrieveFiles from "../utils/retrieveIPFS";
+import storeContent from "../utils/storeIPFS";
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -72,6 +66,12 @@ const Home = () => {
       handleGraph(7);
     }
   };
+
+  const spacedTicks = spacedTimestamps(
+    randomData[0].time,
+    randomData[randomData.length - 1].time,
+    { every: 1, period: "day" }
+  );
 
   return (
     <div style={{ padding: "1rem" }}>
