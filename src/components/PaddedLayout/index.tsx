@@ -30,7 +30,7 @@ const PaddedLayout = ({ children }: LayoutProps) => {
 
 const LayoutContainerDiv = styled.div`
   padding-top: ${HEADER_BAR_HEIGHT_PX}px;
-  height: calc(100vh - ${HEADER_BAR_HEIGHT_PX}px);
+  // height: calc(100vh - ${HEADER_BAR_HEIGHT_PX}px);
   display: flex;
   flex-direction: column;
   background: #f6f9fc;
@@ -41,12 +41,15 @@ const LayoutContainerDiv = styled.div`
     height: ${HEADER_BAR_HEIGHT_PX}px;
     position: fixed;
     inset: 0 0 auto 0;
+    background: white;
+    z-index: 999999;
   }
 
   // Main content
   & > main {
     padding: 1rem;
     height: 100%;
+    overflow: auto;
   }
 `;
 

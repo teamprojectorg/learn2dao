@@ -4,6 +4,8 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import getSpotPrice from "../api/v1/getSpotPrices";
 import DisplayBox from "../components/DisplayBox";
+import AreaGraph from "../components/Graphs/AreaGraph";
+import BarGraph from "../components/Graphs/BarGraph";
 import LineWithBarGraph from "../components/Graphs/LineWithBarGraph";
 import spacedTimestamps from "../components/Graphs/spacedTimestamps";
 import { CONFIG } from "../config";
@@ -75,7 +77,7 @@ const Home = () => {
 
   return (
     <div style={{ padding: "1rem" }}>
-      <DisplayBox className="center">
+      <DisplayBox $maxWidth="50rem" className="center mb5">
         <CryptoLogos chain="ethereum" size="32px" />
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 1</h2>
         <LineWithBarGraph
@@ -87,6 +89,42 @@ const Home = () => {
             label: "Time",
             dataKey: "time",
             ticks: spacedTicks,
+            formatter: (tick) => moment(tick).format("L"),
+          }}
+          yAxis={{ label: "Temperature" }}
+        />
+      </DisplayBox>
+      <DisplayBox $maxWidth="50rem" className="center mb5">
+        <CryptoLogos chain="ethereum" size="32px" />
+        <h2 style={{ marginTop: "1rem" }}>DAO Visual 2</h2>
+        <AreaGraph
+          data={randomData}
+          height={300}
+          dataKey="temperature"
+          xAxis={{
+            label: "Time",
+            dataKey: "time",
+            ticks: spacedTicks,
+            formatter: (tick) => moment(tick).format("L"),
+          }}
+          yAxis={{ label: "Temperature" }}
+        />
+      </DisplayBox>
+      <DisplayBox $maxWidth="50rem" className="center">
+        <CryptoLogos chain="ethereum" size="32px" />
+        <h2 style={{ marginTop: "1rem" }}>DAO Visual 2</h2>
+        <BarGraph
+          data={randomData}
+          height={300}
+          dataKeys={[{ key: "temperature", fill: "#000" }]}
+          xAxis={{
+            label: "Time",
+            dataKey: "time",
+            ticks: spacedTimestamps(
+              randomData[0].time,
+              randomData[randomData.length - 1].time,
+              { every: 5, period: "day" }
+            ),
             formatter: (tick) => moment(tick).format("L"),
           }}
           yAxis={{ label: "Temperature" }}

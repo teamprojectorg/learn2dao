@@ -2,16 +2,12 @@ import React from "react";
 import {
   Area,
   AreaChart,
-  Bar,
   CartesianGrid,
-  ComposedChart,
   Label,
-  Line,
   ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
-import LineGradient from "./Gradient";
 
 type Axis<T, X extends keyof T> = {
   dataKey: X;
@@ -50,10 +46,10 @@ function AreaGraph<
       <AreaChart
         data={data}
         margin={{
-          top: 10,
+          top: 5,
           right: 30,
-          left: 0,
-          bottom: 0,
+          left: 20,
+          bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -102,3 +98,5 @@ function AreaGraph<
     </ResponsiveContainer>
   );
 }
+
+export default AreaGraph;
