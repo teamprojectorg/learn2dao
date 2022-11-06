@@ -51,7 +51,7 @@ console.log("Step1 completed. The Execution ID is", id);
 // "QUERY_STATE_EXECUTING" to "QUERY_STATE_COMPLETED"
 let current_status = getStatus(id);
 
-await delay(100000);
+await delay(1000000);
 
 // Step 3: Get the response 
 const response_2 = await fetch('https://api.dune.com/api/v1/execution/' + id + '/results',{
@@ -132,8 +132,8 @@ var params_tokenHolders_3 = { "query_parameters" : {
     "Token Address":"0x6810e776880C02933D47DB1b9fc05908e5386b96",
 }}
 
-useDuneApi(query2_id, params_tokenHolders_1, "holders_over_time_Uniswap");
-// useDuneApi(query2_id, params_tokenHolders_2, "holders_over_time_ApeCoin");
+// useDuneApi(query2_id, params_tokenHolders_1, "holders_over_time_Uniswap"); not donw
+useDuneApi(query2_id, params_tokenHolders_2, "holders_over_time_ApeCoin");
 // useDuneApi(query2_id, params_tokenHolders_3, "holders_over_time_Gnosis");
 
 
