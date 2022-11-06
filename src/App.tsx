@@ -6,6 +6,9 @@ import getTokenHolders from './api/v1/getTokenHolders';
 import Web3 from 'Web3';
 import { Magic } from 'magic-sdk';
 import { ConnectExtension } from '@magic-ext/connect';
+import { LivepeerConfig, createReactClient, studioProvider } from "@livepeer/react";
+import { ConnectKitProvider, getDefaultClient } from 'connectkit';
+import { WagmiConfig, chain, createClient } from 'wagmi';
 
 const magic = new Magic("pk_live_73AAE8A5F81B1CF3", {
   network: "goerli",

@@ -11,6 +11,9 @@ import spacedTimestamps from "../components/Graphs/spacedTimestamps";
 import { CONFIG } from "../config";
 import retrieveFiles from "../utils/retrieveIPFS";
 import storeContent from "../utils/storeIPFS";
+import { LivepeerConfig, createReactClient, studioProvider } from "@livepeer/react";
+import { ConnectKitProvider, getDefaultClient } from 'connectkit';
+import { WagmiConfig, chain, createClient } from 'wagmi';
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -19,6 +22,20 @@ const Home = () => {
   const [graphData, setGraph] = useState([]);
   const [weiData, setWei] = useState([]);
   const [graphErr, setErr] = useState(false);
+
+
+
+  const wagmiClient = createClient(
+    getDefaultClient({
+      appName: 'livepeer.js',
+      chains: [ chain.polygonMumbai ],
+      infuraId: CONFIG.TEMPLATE.livepeer_key
+    })
+  )
+
+   const client = createReactClient({
+     provider: studioProvider({ apiKey: CONFIG.TEMPLATE.livepeer_key }),
+   });
 
   //call getData funciton use React Hook
   useEffect(() => {
@@ -127,6 +144,17 @@ const Home = () => {
           yAxis={{ label: "Temperature" }}
         />
       </DisplayBox>
+
+      <WagmiConfig client={wagmiClient}>
+        <ConnectKitProvider>
+          <LivepeerConfig client={client}>
+            {/* <Layout>
+              <Component {...pageProps} />
+            </Layout> */}
+          </LivepeerConfig>
+        </ConnectKitProvider>
+      </WagmiConfig>
+
     </div>
   );
 };

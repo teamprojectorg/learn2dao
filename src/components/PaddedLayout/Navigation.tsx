@@ -10,6 +10,10 @@ import { useState } from "react";
 import { Magic } from "magic-sdk";
 import { ConnectExtension } from "@magic-ext/connect";
 
+import { Player } from '@livepeer/react';
+import * as React from 'react';
+
+
 const Navigation = () => {
   const { openMenu } = useSlidingMenuContext();
   const [account, setAccount] = useState(null);
