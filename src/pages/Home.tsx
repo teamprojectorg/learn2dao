@@ -1,8 +1,9 @@
-import { CryptoLogos } from "@web3uikit/core";
+import { CryptoLogos, Avatar } from "@web3uikit/core";
 import console from "console";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import getSpotPrice from "../api/v1/getSpotPrices";
+import DAOOverviewTable from "../components/DAOOverviewTable";
 import DisplayBox from "../components/DisplayBox";
 import AreaGraph from "../components/Graphs/AreaGraph";
 import BarGraph from "../components/Graphs/BarGraph";
@@ -77,6 +78,13 @@ const Home = () => {
 
   return (
     <div style={{ padding: "1rem" }}>
+      <Avatar
+        theme="letters"
+        text="Luis Serazo"
+        avatarBackground="#000"
+        isRounded
+        textColor="#FFF"
+      />
       <DisplayBox $maxWidth="50rem" className="center mb5">
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 1</h2>
         <LineWithBarGraph
@@ -127,6 +135,7 @@ const Home = () => {
           yAxis={{ label: "Temperature" }}
         />
       </DisplayBox>
+      <DAOOverviewTable />
     </div>
   );
 };
