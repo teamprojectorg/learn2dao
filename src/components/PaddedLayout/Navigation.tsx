@@ -9,8 +9,10 @@ import { useCallback } from "react";
 import { useState } from "react";
 import { Magic } from "magic-sdk";
 import { ConnectExtension } from "@magic-ext/connect";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const { openMenu } = useSlidingMenuContext();
   const [account, setAccount] = useState(null);
   const getAccount = useCallback(async () => {
@@ -66,12 +68,17 @@ const Navigation = () => {
   };
   return (
     <Nav>
-      <Flex alignItems="center" className="gap-3">
+      <Flex alignItems="center" justifyContent="center" className="gap-3">
         <PhantomButton onClick={() => openMenu()}>
           <Menu fill="#000" width={18} height={18} />
         </PhantomButton>
-        <CryptoLogos chain="ethereum" size="20px" />
-        <h3 id="nav-title">Learn 2 DAO</h3>
+        <img
+          className="pointer"
+          onClick={() => navigate("/")}
+          height={25}
+          width="auto"
+          src="/assets/banner.png"
+        />
       </Flex>
       <WidthGeqOnly $minWidth={750}>
         {!account && (

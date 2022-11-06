@@ -5,6 +5,7 @@ import { animated, useTransition } from "react-spring";
 import styled from "styled-components";
 import { TABLET_OR_MOBILE_MAX_WIDTH_PX } from "../constants";
 import PhantomButton from "../PhantomButton";
+import { useNavigate } from "react-router-dom";
 
 const MENU_WINDOW_WIDTH_PX = 350;
 
@@ -16,14 +17,6 @@ type MenuItem = {
 const menuItems: MenuItem[] = [
   {
     label: "Home",
-    path: "/",
-  },
-  {
-    label: "DAO Visual 1",
-    path: "/",
-  },
-  {
-    label: "DAO Visual 2",
     path: "/",
   },
 ];
@@ -47,6 +40,7 @@ export const useSlidingMenuContext = () => {
 };
 
 const SlidingMenu = () => {
+  const navigate = useNavigate();
   const { isOpen, closeMenu } = useSlidingMenuContext();
   const transition = useTransition(isOpen, {
     from: {
@@ -74,9 +68,11 @@ const SlidingMenu = () => {
                 {menuItems.map((item) => (
                   <MenuItemLink
                     className="pointer"
-                    onClick={() => closeMenu()}
+                    onClick={() => {
+                      navigate(item.path);
+                      closeMenu();
+                    }}
                     key={item.label}
-                    href={item.path}
                   >
                     {item.label}
                   </MenuItemLink>
