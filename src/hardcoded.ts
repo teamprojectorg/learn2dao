@@ -49,7 +49,7 @@ export const hardcoded = [
   },
 
   {
-    logoUrl: "/assets/bunnydao.png",
+    logoUrl: "/assets/bunny-dao.png",
     governanceContractAddress: "0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51",
     name: "Bunny",
     tags: [
@@ -58,20 +58,8 @@ export const hardcoded = [
     ],
     about: `Bunny is a Defi Yield Farming Aggregator and Optimizer for the Binance Smart Chain and Polygon.`,
   },
-
   {
-    logoUrl: "/assets/bunnydao.png",
-    governanceContractAddress: "0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51",
-    name: "Bunny",
-    tags: [
-      { text: "DEFI", color: "purple" },
-      { text: "FinTech", color: "green" },
-    ],
-    about: `Bunny is a Defi Yield Farming Aggregator and Optimizer for the Binance Smart Chain and Polygon.`,
-  },
-
-  {
-    logoUrl: "/assets/DAOSquare.jpeg",
+    logoUrl: "/assets/dao-square.png",
     governanceContractAddress: "0xbd9908b0cdd50386f92efcc8e1d71766c2782df0",
     name: "DAOSquare",
     tags: [
@@ -81,9 +69,8 @@ export const hardcoded = [
     about: `Youth Explore Web3
     `,
   },
-
   {
-    logoUrl: "/assets/GovornorDAO.jpeg",
+    logoUrl: "/assets/governor-dao.jpeg",
     governanceContractAddress: "0x515d7e9d75e2b76db60f8a051cd890eba23286bc",
     name: "Governor DAO",
     tags: [
@@ -92,8 +79,6 @@ export const hardcoded = [
     ],
     about: `Governor DAO offers DAO governance bootstrapping tools and tutoring, and a biometric Proof-of-Humanity membership registration to facilitate 1person-1vote systems.`,
   },
-  
-  
 ] as const;
 
 export const hardcodedLookup = keyBy(

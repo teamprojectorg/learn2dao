@@ -49,7 +49,7 @@ const Home = () => {
         />
       </MaxWidth>
       <Text.h1 className="mb4">Popular DAOs</Text.h1>
-      <GridUnlessMobile gridTemplateColumns="1fr 1fr 1fr">
+      <GridUnlessMobile rowGap="5rem" gridTemplateColumns="1fr 1fr 1fr">
         {hardcoded.map((h, i) => (
           <DAOInfo
             key={`${i}-${h.name}`}
