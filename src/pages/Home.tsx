@@ -1,100 +1,60 @@
-import { CryptoLogos } from "@web3uikit/core";
-import console from "console";
-import moment from "moment";
-import { useEffect, useState } from "react";
-import getSpotPrice from "../api/v1/getSpotPrices";
-import DisplayBox from "../components/DisplayBox";
-import AreaGraph from "../components/Graphs/AreaGraph";
-import BarGraph from "../components/Graphs/BarGraph";
-import LineWithBarGraph from "../components/Graphs/LineWithBarGraph";
-import spacedTimestamps from "../components/Graphs/spacedTimestamps";
-import { CONFIG } from "../config";
-import retrieveFiles from "../utils/retrieveIPFS";
-import storeContent from "../utils/storeIPFS";
-import { LivepeerConfig, createReactClient, studioProvider } from "@livepeer/react";
-import { ConnectKitProvider, getDefaultClient } from 'connectkit';
-import { WagmiConfig, chain, createClient } from 'wagmi';
+import DAOInfo from "../components/DAOInfo";
+import Flex from "../components/Flex";
+import { Search } from "../components/Search";
+import Text from "../components/Text";
+import { GridUnlessMobile, MaxWidth } from "../components/Width";
+import { hardcoded } from "../hardcoded";
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const [items, setItems] = useState([]);
+  const navigate = useNavigate();
+  return <div className="pa2">
+    <div className="fit center">
+      <Flex className="gap-2">
+        <Text.title>Learn</Text.title>
+        <Text.bodyBigger className="mt4">{"2 -> 3"}</Text.bodyBigger>
+        <Text.title>DAO</Text.title>
+      </Flex>
+      <Text.bodyBig className="tc mt2">
+        Learn, understand and join DAOs
+      </Text.bodyBig>
+    </div>
+    <MaxWidth $maxWidth="50rem" className="center">
+      <Search
+        placeholder="Seach by ENS or Governance Contract (ERC721/ERC20/ERC1155)"
+        className="mv4"
+        dataFetcher={async (val) => {
+          if (val.toLowerCase() === 'ape') {
+            return [{id: '0x4d224452801ACEd8B2F0aebE155379bb5D594381', label: 'ApeCoin'}]
+          }
+          return []
+        }}
+        onSearch={val => navigate(`/info/${val}`)}
+      />
+    </MaxWidth>
+    <Text.h1 className="mb4">Popular DAOs</Text.h1>
+    <GridUnlessMobile gridTemplateColumns="1fr 1fr 1fr">
+      {hardcoded.map((h) => (
+        <DAOInfo
+          key={h.governanceContractAddress}
+          logoUrl={h.logoUrl}
+          name={h.name}
+          tags={h.tags as any}
+          governanceContractAddress={h.governanceContractAddress}
+        />
+      ))}
+    </GridUnlessMobile>
+  </div>
+};
 
-  // setup for Timeseries graph
-  const [graphData, setGraph] = useState([]);
-  const [weiData, setWei] = useState([]);
-  const [graphErr, setErr] = useState(false);
-
-
-
-  const wagmiClient = createClient(
-    getDefaultClient({
-      appName: 'livepeer.js',
-      chains: [ chain.polygonMumbai ],
-      infuraId: CONFIG.TEMPLATE.livepeer_key
-    })
-  )
-
-   const client = createReactClient({
-     provider: studioProvider({ apiKey: CONFIG.TEMPLATE.livepeer_key }),
-   });
-
-  //call getData funciton use React Hook
-  useEffect(() => {
-    handleCollection();
-  }, []);
-
-  const handleGraph = async (filter: any) => {
-    try {
-      // console.log('Hello');
-
-      // when I did start_date = "2022-10-1 and end_date="2022-10-03 the API didn't work
-      const start_date = "2021-01-01";
-      const end_date = "2021-01-03";
-      const UNISWAP_address = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
-
-      const chainId = "1";
-      // getPortfolio(CONFIG.TEMPLATE.api_key, chainId, UNISWAP_address)
-      const resp = await getSpotPrice(
-        UNISWAP_address,
-        start_date,
-        end_date,
-        CONFIG.TEMPLATE.covalent_api_key
-      );
-
-      console.log("ijij", { resp });
-
-      setErr(false);
-    } catch (error) {
-      setErr(true);
-    }
-  };
-
-  const handleCollection = async () => {
-    let CID = storeContent();
-    retrieveFiles(CID);
-
-    // console.log('Successfully retrieve the IPFS DATA');
-    let collection = [];
-    const blockchain_id = "1";
-    const address_id = "0x4d224452801ACEd8B2F0aebE155379bb5D594381";
-    try {
-      //  const resp= await axios.get(`https://api.covalenthq.com/v1/${blockchain_id}/nft_market/collection/${address_id}/`,{auth: {username: CONFIG.TEMPLATE.api_key}})
-    } catch (error) {}
-
-    if (CONFIG.TEMPLATE.timeseries_chart) {
-      //call endpoint with 7 day parameters as default for graph
-      handleGraph(7);
-    }
-  };
+/*
 
   const spacedTicks = spacedTimestamps(
     randomData[0].time,
     randomData[randomData.length - 1].time,
     { every: 1, period: "day" }
   );
-
-  return (
-    <div style={{ padding: "1rem" }}>
-      <DisplayBox $maxWidth="50rem" className="center mb5">
+<DisplayBox $maxWidth="50rem" className="center mb5">
         <h2 style={{ marginTop: "1rem" }}>DAO Visual 1</h2>
         <LineWithBarGraph
           data={randomData}
@@ -144,21 +104,8 @@ const Home = () => {
           yAxis={{ label: "Temperature" }}
         />
       </DisplayBox>
-
-      <WagmiConfig client={wagmiClient}>
-        <ConnectKitProvider>
-          <LivepeerConfig client={client}>
-            {/* <Layout>
-              <Component {...pageProps} />
-            </Layout> */}
-          </LivepeerConfig>
-        </ConnectKitProvider>
-      </WagmiConfig>
-
-    </div>
-  );
-};
-
+      <DAOOverviewTable />
+*/
 const randomData = [
   { time: 1563577200000, temperature: 17.4 },
   { time: 1563580800000, temperature: 17.2 },

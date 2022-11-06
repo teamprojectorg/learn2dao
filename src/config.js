@@ -47,8 +47,10 @@ export const CONFIG = {
   ],
 
   // DAOS WE CAN USE FOR HACKATHON
-  DAOS_OPTIONS: [
-    { name: 'APECOIN', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5', chainid: '1' },
-    { name: 'Sandbox', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5', chainid: '1' },
+  DAOS: [
+    { name: 'APECOIN', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5'},
+    { name: 'Sandbox', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5'},
+    { name: 'BitDAO', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5'},
+
   ],
 };

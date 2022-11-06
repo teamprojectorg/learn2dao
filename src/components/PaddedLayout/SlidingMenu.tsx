@@ -3,9 +3,9 @@ import { Cross } from "@web3uikit/icons";
 import { createContext, useContext } from "react";
 import { animated, useTransition } from "react-spring";
 import styled from "styled-components";
+import { TABLET_OR_MOBILE_MAX_WIDTH_PX } from "../constants";
 import PhantomButton from "../PhantomButton";
 
-const TABLET_OR_MOBILE_MAX_WIDTH_PX = 750;
 const MENU_WINDOW_WIDTH_PX = 350;
 
 type MenuItem = {
@@ -103,6 +103,7 @@ const MenuWindowContainerDiv = styled.div`
   padding: 1.5rem 1.5rem;
   z-index: 999999;
   width: ${MENU_WINDOW_WIDTH_PX}px;
+
   @media only screen and (max-width: ${TABLET_OR_MOBILE_MAX_WIDTH_PX}px) {
     width: calc(100% - 2 * 1.5rem);
     & > #nav-menu-items {

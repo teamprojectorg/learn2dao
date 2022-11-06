@@ -5,7 +5,7 @@ import PhantomButton from "../PhantomButton";
 import { useSlidingMenuContext } from "./SlidingMenu";
 import { Button, CryptoLogos } from "@web3uikit/core";
 import { WidthGeqOnly } from "../Width";
-import { useCallback } from 'react';
+import { useCallback } from "react";
 import { useState } from "react";
 import { Magic } from "magic-sdk";
 import { ConnectExtension } from "@magic-ext/connect";
@@ -18,32 +18,31 @@ const Navigation = () => {
   const { openMenu } = useSlidingMenuContext();
   const [account, setAccount] = useState(null);
   const getAccount = useCallback(async () => {
-    console.log('getAccounts clicked');
+    console.log("getAccounts clicked");
     const accounts = await window.web3.eth.getAccounts();
-    console.log('account:', accounts[0]);
-  }, [])
-
+    console.log("account:", accounts[0]);
+  }, []);
 
   const login = useCallback(async () => {
-    console.log("Login")
-    window.web3.eth.getAccounts()
-      .then((accounts) => {
+    console.log("Login");
+    window.web3.eth
+      .getAccounts()
+      .then((accounts: any) => {
         setAccount(accounts?.[0]);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error);
       });
   }, []);
 
-
   const showWallet = () => {
-    magic.connect.showWallet().catch((e) => {
+    magic.connect.showWallet().catch((e: any) => {
       console.log(e);
     });
   };
 
   const disconnect = async () => {
-    await magic.connect.disconnect().catch((e) => {
+    await magic.connect.disconnect().catch((e: any) => {
       console.log(e);
     });
     setAccount(null);
@@ -55,17 +54,17 @@ const Navigation = () => {
       from: publicAddress,
       to: publicAddress,
       value: web3.utils.toWei("0.01", "ether"),
-      gasPrice: web3.utils.toWei("30", "gwei")
+      gasPrice: web3.utils.toWei("30", "gwei"),
     };
     web3.eth
       .sendTransaction(txnParams as any)
-      .on("transactionHash", (hash) => {
+      .on("transactionHash", (hash: any) => {
         console.log("the txn hash that was returned to the sdk:", hash);
       })
-      .then((receipt) => {
+      .then((receipt: any) => {
         console.log("the txn receipt that was returned to the sdk:", receipt);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error);
       });
   };
@@ -79,28 +78,55 @@ const Navigation = () => {
         <h3 id="nav-title">Learn 2 DAO</h3>
       </Flex>
       <WidthGeqOnly $minWidth={750}>
-      {!account  && <Button
-          size="large"
-          type="button"
-          theme="colored"
-          color="blue"
-          text="Sign In"
-          onClick={() => { login()}}
-        />}
+        {!account && (
+          <Button
+            size="large"
+            type="button"
+            theme="colored"
+            color="blue"
+            text="Sign In"
+            onClick={() => {
+              login();
+            }}
+          />
+        )}
 
         {account && (
-         <>
-          <button onClick={showWallet} className="button-row">
-            Show Wallet
-          </button>
-          <button onClick={disconnect} className="button-row">
-            Disconnect
-          </button>
-          <button onClick={showWallet} className="button-row">
-            Sign Message
-          </button>
-        </>
-      )}
+          <>         
+           <Button
+            size="small"
+            type="button"
+            theme="colored"
+            color="blue"
+            text="Show Wallets"
+            onClick={() => {
+              showWallet();
+            }}
+            />
+
+            <Button
+              size="small"
+              type="button"
+              theme="colored"
+              color="blue"
+              text="Sign Out"
+              onClick={() => {
+                disconnect();
+            }}
+             />
+            <Button
+              size="small"
+              type="button"
+              theme="colored"
+              color="blue"
+              text="Send Transactions"
+              onClick={() => {
+              sendTransaction();
+            }}
+            />
+
+          </>
+        )}
       </WidthGeqOnly>
     </Nav>
   );
