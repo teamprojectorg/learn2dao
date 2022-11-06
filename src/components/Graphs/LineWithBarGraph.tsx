@@ -87,6 +87,7 @@ function LineWithBarGraph<
           </YAxis>
         )}
         <Bar
+          isAnimationActive={false}
           dataKey={bar.dataKey as any}
           barSize={bar.size}
           name={bar.name}
@@ -94,6 +95,7 @@ function LineWithBarGraph<
           fill="#0a04c3"
         />
         <Line
+          isAnimationActive={false}
           dataKey={line.dataKey as any}
           name={line.name}
           unit={line.unit}

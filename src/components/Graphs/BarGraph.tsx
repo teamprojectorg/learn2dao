@@ -82,6 +82,7 @@ function BarGraph<
         {children}
         {dataKeys.map((k) => (
           <Bar
+            isAnimationActive={false}
             key={k.key as any}
             dataKey={k.key as any}
             fill={k.fill}

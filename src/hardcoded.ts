@@ -12,6 +12,7 @@ export const hardcoded = [
     about: `BitDAO’s vision is open finance and a decentralized tokenized economy.
     DeFi technology enables unstoppable and permissionless transactions on the blockchain, including trading, lending, and creation of synthetic assets. With no signup process, no middlemen approvals, no middleman execution, DeFi will fundamentally disrupt traditional finance and is likely to become a trillion dollar sector.
     Tokenization has broadened the scope of property rights, and enabled new economic models for DAOs, collectible NFTs, and gaming.`,
+    ensAddress: "apecoin.eth",
   },
   {
     logoUrl: "/assets/git-coin.png",
@@ -26,6 +27,7 @@ export const hardcoded = [
     We are creating community and infrastructure for Web 3 — a diverse range of tools, technologies, and networks that enable people to work for the open internet.
     
     By funding projects, building community, and making learning resources accessible, we are teaming up to create the digital public infrastructure of tomorrow.`,
+    ensAddress: "apecoin.eth",
   },
   {
     logoUrl: "/assets/ape-coin.png",
@@ -46,6 +48,7 @@ export const hardcoded = [
     Access - exclusive games, merch, events, and services 
     
     Incentivization - tool for third-party developers to incorporate APE into their services, games, and other projects`,
+    ensAddress: "apecoin.eth",
   },
 
   {
@@ -57,6 +60,7 @@ export const hardcoded = [
       { text: "FinTech", color: "green" },
     ],
     about: `Bunny is a Defi Yield Farming Aggregator and Optimizer for the Binance Smart Chain and Polygon.`,
+    ensAddress: "apecoin.eth",
   },
   {
     logoUrl: "/assets/dao-square.png",
@@ -66,8 +70,8 @@ export const hardcoded = [
       { text: "DAO", color: "blue" },
       { text: "Social Good", color: "green" },
     ],
-    about: `Youth Explore Web3
-    `,
+    about: `Youth Explore Web3`,
+    ensAddress: "apecoin.eth",
   },
   {
     logoUrl: "/assets/governor-dao.jpeg",
@@ -78,6 +82,7 @@ export const hardcoded = [
       { text: "Service", color: "green" },
     ],
     about: `Governor DAO offers DAO governance bootstrapping tools and tutoring, and a biometric Proof-of-Humanity membership registration to facilitate 1person-1vote systems.`,
+    ensAddress: "apecoin.eth",
   },
 ] as const;
 

@@ -137,6 +137,11 @@ const title = styled(body)`
   font-size: 3.5em;
 `;
 
+const titleSmall = styled(body)`
+  font-family: ${FONT_FAMILY.bold};
+  font-size: 2.5em;
+`;
+
 const bodyBig = styled(body)`
   font-size: 1.25em;
 `;
@@ -247,6 +252,7 @@ const Text = {
   captionBold,
   externalLink,
   title,
+  titleSmall,
   link,
   linkSmall,
   linkButton,

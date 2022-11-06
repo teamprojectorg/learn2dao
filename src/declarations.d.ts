@@ -5,3 +5,4 @@ interface Window {
 
 declare var magic: any;
 declare var web3: any;
+declare module "wink-sentiment";
