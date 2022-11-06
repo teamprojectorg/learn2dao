@@ -11,6 +11,10 @@ import { Magic } from "magic-sdk";
 import { ConnectExtension } from "@magic-ext/connect";
 import { useNavigate } from "react-router-dom";
 
+import { Player } from '@livepeer/react';
+import * as React from 'react';
+
+
 const Navigation = () => {
   const navigate = useNavigate();
   const { openMenu } = useSlidingMenuContext();
@@ -95,16 +99,39 @@ const Navigation = () => {
         )}
 
         {account && (
-          <>
-            <button onClick={showWallet} className="button-row">
-              Show Wallet
-            </button>
-            <button onClick={disconnect} className="button-row">
-              Disconnect
-            </button>
-            <button onClick={showWallet} className="button-row">
-              Sign Message
-            </button>
+          <>         
+           <Button
+            size="small"
+            type="button"
+            theme="colored"
+            color="blue"
+            text="Show Wallets"
+            onClick={() => {
+              showWallet();
+            }}
+            />
+
+            <Button
+              size="small"
+              type="button"
+              theme="colored"
+              color="blue"
+              text="Sign Out"
+              onClick={() => {
+                disconnect();
+            }}
+             />
+            <Button
+              size="small"
+              type="button"
+              theme="colored"
+              color="blue"
+              text="Send Transactions"
+              onClick={() => {
+              sendTransaction();
+            }}
+            />
+
           </>
         )}
       </WidthGeqOnly>

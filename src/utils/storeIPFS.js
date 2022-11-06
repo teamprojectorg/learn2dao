@@ -23,3 +23,4 @@ export default async function storeIPFS (json_content) {
   console.log(`Gateway URL: https://dweb.link/ipfs/${cid}`);
   return cid;
 }
+

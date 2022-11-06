@@ -21,6 +21,9 @@ export const CONFIG = {
     // 7. Set Web3Storage API Key
     web3storage_api_key:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDMyNTBBRDg5M2I2MUU4NUM4N0NjYTc5QTA0NGQ2N0ExMzc0Njg2QTUiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjczNDk3MjY1MTcsIm5hbWUiOiJ3ZWIzX3Rva2VuIn0._VCATmFBQPzimFDVS0JzdGvpdcKAhKONEXvyUs4Yalc',
+    
+    livepeer_key:
+    '16a0d4dc-86e9-4af5-91f1-1e0434e713f7',
   },
 
   // Supported networks - just for your reference
@@ -44,8 +47,10 @@ export const CONFIG = {
   ],
 
   // DAOS WE CAN USE FOR HACKATHON
-  DAOS_OPTIONS: [
-    { name: 'APECOIN', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5', chainid: '1' },
-    { name: 'Sandbox', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5', chainid: '1' },
+  DAOS: [
+    { name: 'APECOIN', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5'},
+    { name: 'Sandbox', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5'},
+    { name: 'BitDAO', address: '0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5'},
+
   ],
 };

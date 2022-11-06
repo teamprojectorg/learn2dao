@@ -1,6 +1,6 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ConnectExtension } from "@magic-ext/connect";
 import { Magic } from "magic-sdk";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Web3 from "Web3";
 import PaddedLayout from "./components/PaddedLayout";
 import Home from "./pages/Home";

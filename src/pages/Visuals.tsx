@@ -14,6 +14,31 @@ import BarGraph from "../components/Graphs/BarGraph";
 import holders from "../../holders_over_time_Gnosis.json";
 import LineWithBarGraph from "../components/Graphs/LineWithBarGraph";
 import { Tooltip } from "recharts";
+import { Livepeer } from './_app';
+import {
+  LivepeerConfig,
+  ThemeConfig,
+  createReactClient,
+  studioProvider,
+  Player
+} from '@livepeer/react';
+
+import * as React from 'react';
+
+
+const client = createReactClient({
+  provider: studioProvider({ apiKey: '16a0d4dc-86e9-4af5-91f1-1e0434e713f7' }),
+});
+ 
+const livepeerTheme: ThemeConfig = {
+  colors: {
+    accent: 'rgb(0, 145, 255)',
+    containerBorderColor: 'rgba(0, 145, 255, 0.9)',
+  },
+  fonts: {
+    display: 'Inter',
+  },
+};
 
 const Visuals = () => {
   const { id: governanceContractAddress } = useParams<{ id: string }>();
@@ -26,6 +51,21 @@ const Visuals = () => {
   }
 
   const giniData = idk["rows"];
+
+  const playbackId =
+  'bdbdbbt292rhqffl';
+ 
+  function Livepeer() {
+    return (
+      <Player
+        playbackId={playbackId}
+        loop
+        autoPlay
+        showTitle={false}
+        muted
+      />
+    );
+  }
 
   return (
     <div className="mt3">
@@ -64,7 +104,10 @@ const Visuals = () => {
           </div>
         </DisplayBox>
         <DisplayBox>
-          <Text.h2>Live Peer Video</Text.h2>
+          {/* <Text.h2>Live Peer Video</Text.h2> */}
+          <LivepeerConfig client={client} theme={livepeerTheme}>
+      <Livepeer />
+    </LivepeerConfig>
         </DisplayBox>
       </Grid>
       <Grid columnGap="0.75rem" gridTemplateColumns="1fr 1fr">
