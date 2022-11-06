@@ -1,4 +1,5 @@
 import fuzzysort from "fuzzysort";
+import { useNavigate } from "react-router-dom";
 import CircleImage from "../components/CircleImage";
 import DAOInfo from "../components/DAOInfo";
 import GentleImage from "../components/GentleImage";
@@ -6,7 +7,6 @@ import { Search } from "../components/Search";
 import Text from "../components/Text";
 import { GridUnlessMobile, MaxWidth } from "../components/Width";
 import { hardcoded } from "../hardcoded";
-import { useNavigate } from "react-router-dom";
 
 const autoCompleteFromHardCoded = (query: string) => {
   const results = fuzzysort.go(query, hardcoded, {
@@ -24,22 +24,14 @@ const autoCompleteFromHardCoded = (query: string) => {
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="pa2">
-      <div className="fit center">
-        <GentleImage
-          className="mb2"
-          width={350}
-          height="auto"
-          src="/assets/banner.png"
-        />
-        <Text.bodyBig className="tc">
-          Learn, understand and join DAOs
-        </Text.bodyBig>
+    <div className="pa5">
+      <div className="mb4 flex flex-column items-center gap-2">
+        <GentleImage width={350} height="auto" src="/assets/banner.png" />
+        <Text.bodyBig>Learn, understand and join DAOs</Text.bodyBig>
       </div>
-      <MaxWidth $maxWidth="50rem" className="center">
+      <MaxWidth $maxWidth="50rem" className="mb5 center">
         <Search<string, { logoUrl: string }>
           placeholder="Seach by ENS or Governance Contract (ERC721/ERC20/ERC1155)"
-          className="mv4"
           dataFetcher={autoCompleteFromHardCoded}
           renderOption={({ option }) => {
             return (

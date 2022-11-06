@@ -8,4 +8,3 @@ export type Option<V, T = undefined> = Readonly<
 export type RenderOption<V, T = undefined> = (props: {
   option: Option<V, T>;
 }) => JSX.Element;
-export type FocusHandler = (e: React.FocusEvent<HTMLElement>) => void;

@@ -1,25 +1,9 @@
 import React, { useCallback, useRef, useState } from "react";
-import { FocusHandler } from "./types";
 
-type HookArgs = {
-  onFocus?: FocusHandler;
-  onBlur?: FocusHandler;
-  onOpen?: () => void;
-  disabled?: boolean;
-};
-
-const useMenu = <
-  ContainerEl extends HTMLElement = HTMLDivElement,
-  MenuEl extends HTMLElement = HTMLDivElement
->({
-  onFocus,
-  onBlur,
-  onOpen,
-  disabled,
-}: HookArgs) => {
+const useMenu = () => {
   const timeoutId = useRef<NodeJS.Timeout>();
-  const containerRef = useRef<ContainerEl>(null);
-  const menuRef = useRef<MenuEl>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
@@ -29,10 +13,9 @@ const useMenu = <
       if (timeoutId.current) {
         clearTimeout(timeoutId.current);
       }
-      onFocus?.(e);
       setFocus(true);
     },
-    [onFocus, setFocus]
+    [setFocus]
   );
 
   const onBlurHandler = useCallback(
@@ -43,13 +26,12 @@ const useMenu = <
       timeoutId.current = setTimeout(() => {
         // Check if the new activeElement is a child of the original container
         if (!currentTarget.contains(document.activeElement)) {
-          onBlur?.(e);
           setFocus(false);
           setOpen(false);
         }
       }, 0);
     },
-    [onBlur, setFocus, setOpen]
+    [setFocus, setOpen]
   );
 
   const closeMenu = () => {
@@ -61,8 +43,7 @@ const useMenu = <
   };
 
   const openMenu = () => {
-    if (open || disabled) return;
-    onOpen?.();
+    if (open) return;
     setOpen(true);
   };
 

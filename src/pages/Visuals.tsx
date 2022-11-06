@@ -72,7 +72,7 @@ const Visuals = () => {
           <BarGraph
             height={300}
             data={idk["rows"]}
-            dataKeys={[{ key: "gini", fill: "#8884d8" }]}
+            dataKeys={[{ key: "gini", fill: "#0a04c3" }]}
             xAxis={{
               label: "Date",
               dataKey: "date",
@@ -95,7 +95,9 @@ const Visuals = () => {
         <DisplayBox>
           <LineWithBarGraph
             height={300}
-            data={holders["rows"]}
+            data={holders["rows"].map((r) => ({
+              ...r,
+            }))}
             line={{ dataKey: "Holders", name: "Holders" }}
             bar={{ dataKey: "change", name: "Change" }}
             xAxis={{

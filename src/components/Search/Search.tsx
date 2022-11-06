@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 import Text from "../Text";
 import { SearchBar } from "./SearchBar";
-import { FocusHandler, Option, RenderOption, Value } from "./types";
+import { Option, RenderOption, Value } from "./types";
 import useMenu from "./useMenu";
 import { OptionFetcher, useSearch } from "./useSearch";
 
@@ -23,52 +23,22 @@ const OptText = styled(Text.bodySmall)`
 `;
 
 export type SearchProps<V extends Value, T> = {
-  /** function for fetching data async */
   dataFetcher: OptionFetcher<V, T>;
-  /** callback triggered on search */
   onSearch: (query: string) => void;
-  /** placeholder in input */
   placeholder?: string;
-  /** onBlur handler  */
-  onBlur?: FocusHandler;
-  /** onFocus handler */
-  onFocus?: FocusHandler;
-  /** onOpen handler */
-  onOpen?: () => void;
-  /** whether or not to close dropdown on ESC (escape) */
-  closeOnEsc?: boolean;
-  /** is the dropdown disabled */
-  disabled?: boolean;
-  /** custom method for rendering option */
   renderOption?: RenderOption<V, T>;
-  /* class names of outer wrapper */
   className?: string;
-  /* [[TODO]]: what should be shown when loading new options */
-  renderLoading?: () => JSX.Element;
-  /* limit number of results shown in dropdown */
-  optionLimit?: number;
-  /* header of the search (logo, etc) */
-  header?: React.ReactElement;
 };
 
 export function Search<V extends Value, T = undefined>({
   dataFetcher,
-  onBlur,
-  onFocus,
-  onOpen,
   onSearch,
-  closeOnEsc = true,
-  disabled,
   className,
   placeholder = "Search...",
-  optionLimit: limit,
   renderOption: RenderOpt = DefaultRenderOption,
 }: SearchProps<V, T>) {
   const { options, loading, error, setQuery, query, moveOptionIdx, optIdx } =
-    useSearch({
-      dataFetcher,
-      limit,
-    });
+    useSearch({ dataFetcher });
 
   const {
     containerRef,
@@ -79,12 +49,7 @@ export function Search<V extends Value, T = undefined>({
     closeMenu,
     onBlurHandler,
     onFocusHandler,
-  } = useMenu({
-    onBlur,
-    onFocus,
-    onOpen,
-    disabled,
-  });
+  } = useMenu();
 
   const hasOptions = Boolean(options.length);
 
@@ -131,7 +96,6 @@ export function Search<V extends Value, T = undefined>({
     }
 
     if (code === keyboardKey.Escape) {
-      if (!closeOnEsc) return;
       e.preventDefault();
       return closeMenu();
     }
@@ -191,7 +155,6 @@ export function Search<V extends Value, T = undefined>({
   const formClasses = clsx(className, {
     error,
     loading,
-    disabled,
     focus,
   });
 
@@ -201,7 +164,6 @@ export function Search<V extends Value, T = undefined>({
       ref={containerRef}
       tabIndex={0}
       style={{ position: "relative" }}
-      /* TODO: not sure if these should be here. this needs some tweaking HANDE FULL ON FOCUS */
       onFocus={(e) => onFocusHandler(e)}
       onBlur={(e) => onBlurHandler(e)}
     >
@@ -213,7 +175,6 @@ export function Search<V extends Value, T = undefined>({
         query={query}
         onQueryChange={setQuery}
         placeholder={placeholder}
-        disabled={disabled}
       />
       {dropdownResults}
     </div>

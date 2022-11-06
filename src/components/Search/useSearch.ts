@@ -14,7 +14,6 @@ export type HookProperties<V, T = undefined> = {
 
 export function useSearch<V, T = undefined>({
   dataFetcher,
-  limit = Infinity,
 }: HookProperties<V, T>) {
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -30,9 +29,7 @@ export function useSearch<V, T = undefined>({
         setLoading(true);
         const options = await dataFetcher(query);
         if (options) {
-          setOptions(
-            options.length > limit ? options.slice(0, limit) : options
-          );
+          setOptions(options);
         }
       } catch (e) {
         setError(e);
