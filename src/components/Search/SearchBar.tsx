@@ -1,16 +1,12 @@
-import { Nullable } from '@aemiko/utils';
-import clsx from 'clsx';
-import React, { useEffect, useRef } from 'react';
-import styled, { css } from 'styled-components';
-import { Icon } from '../../Common';
-import { PhantomButton } from '../../PhantomButton';
-import { hideBrowserOutline } from '../../Text';
-import { BODY_FONT_FAMILY } from '../../Text/common';
-import { useTheme } from '../../Theme';
-import { ThemedElement } from '../../Theme/types';
+import { Search } from "@web3uikit/icons";
+import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
+import styled, { css } from "styled-components";
+import PhantomButton from "../PhantomButton";
+import { FONT_FAMILY, hideBrowserOutline } from "../Text";
 
 type SearchBarProps = {
-  query: Nullable<string>;
+  query?: string | null;
   onQueryChange: (q: string) => void;
   onSubmit: () => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
@@ -32,7 +28,6 @@ export const SearchBar = ({
   onClick,
   onQueryChange,
 }: SearchBarProps) => {
-  const { theme } = useTheme();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -45,9 +40,8 @@ export const SearchBar = ({
     <SearchForm
       role="search"
       tabIndex={-1}
-      aemikoTheme={theme}
       className={className}
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
       }}
@@ -55,68 +49,27 @@ export const SearchBar = ({
       <PhantomInput
         ref={inputRef}
         type="text"
-        aemikoTheme={theme}
         className={clsx({ disabled })}
         disabled={disabled}
         tabIndex={0}
         placeholder={placeholder}
-        onChange={e => onQueryChange(e.target.value)}
-        value={query ?? ''}
+        onChange={(e: any) => onQueryChange(e.target.value)}
+        value={query ?? ""}
         onClick={onClick}
         onKeyDown={onKeyDown}
       />
-      <SearchButton disabled={disabled || !query} onClick={() => onSubmit()} />
+      <SearchButtonBase
+        disabled={disabled || !query}
+        type="submit"
+        onClick={() => onSubmit()}
+      >
+        <Search width="1.5rem" height="1.5rem" />
+      </SearchButtonBase>
     </SearchForm>
   );
 };
 
-type DummySearchBarProps = Pick<
-  SearchBarProps,
-  'query' | 'onSubmit' | 'onClick' | 'disabled' | 'placeholder' | 'className'
->;
-
-export const DummySearchBar = ({
-  query,
-  onSubmit,
-  onClick,
-  disabled,
-  placeholder,
-  className,
-}: DummySearchBarProps) => {
-  const { theme } = useTheme();
-  return (
-    <DummyWrapper className={clsx('bg-white', className)} aemikoTheme={theme}>
-      <PhantomInput
-        type="text"
-        aemikoTheme={theme}
-        disabled={disabled}
-        tabIndex={-1}
-        placeholder={placeholder}
-        value={query ?? ''}
-        className={clsx({ disabled })}
-        onClick={onClick}
-        readOnly
-      />
-      <SearchButton disabled={disabled || !query} onClick={() => onSubmit()} />
-    </DummyWrapper>
-  );
-};
-
-type SearchButtonProps = {
-  disabled?: boolean;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
-
-const SearchButton = ({ onClick, disabled }: SearchButtonProps) => {
-  const { theme } = useTheme();
-  return (
-    <SearchButtonBase type="submit" aemikoTheme={theme} disabled={disabled} onClick={onClick}>
-      <Icon.search size="1.5rem" />
-    </SearchButtonBase>
-  );
-};
-
-const searchBarWrapperStyle = css<ThemedElement>`
+const searchBarWrapperStyle = css`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -127,7 +80,7 @@ const searchBarWrapperStyle = css<ThemedElement>`
   background: white;
 
   &:not(.bg-white) {
-    background: ${({ aemikoTheme }) => aemikoTheme['basic-200']};
+    background: #ebf2fb; //basic200
   }
 
   display: flex;
@@ -135,32 +88,28 @@ const searchBarWrapperStyle = css<ThemedElement>`
   align-items: center;
   position: relative;
 
-  font-family: ${BODY_FONT_FAMILY.light};
+  font-family: ${FONT_FAMILY.light};
   line-height: 20px;
 
-  border: 1px solid ${({ aemikoTheme }) => aemikoTheme['basic-500']};
-  border-radius: 2rem; //0.25rem;
-
-  &.b-radius-bold {
-    border-radius: 0.25rem;
-  }
+  border: 1px solid #bcc7df; // basic500
+  border-radius: 0.5rem;
 
   &.error:not(:focus):not(.focus) {
-    background: ${({ aemikoTheme }) => aemikoTheme['danger-transparent-100']};
-    border-color: ${({ aemikoTheme }) => aemikoTheme['danger-500']};
+    background: rgba(234, 49, 49, 0.08); // dangerT100
+    border-color: #ea3131; // danger500
   }
 
   &.focus:not(.disabled),
   &:focus:not(.disabled),
   &:active:not(.disabled) {
     outline: none;
-    border-color: ${({ aemikoTheme }) => aemikoTheme['basic-800']};
+    border-color: #3b4b81; // basic800
   }
 
   &.disabled {
     cursor: not-allowed;
-    background: ${({ aemikoTheme }) => aemikoTheme['basic-transparent-200']};
-    border-color: ${({ aemikoTheme }) => aemikoTheme['basic-transparent-500']};
+    background: rgba(40, 29, 117, 0.16); // basicT200
+    border-color: rgba(40, 29, 117, 0.4); // basicT500
     & > input,
     button {
       cursor: not-allowed;
@@ -169,15 +118,11 @@ const searchBarWrapperStyle = css<ThemedElement>`
   }
 `;
 
-const SearchForm = styled.form<ThemedElement>`
+const SearchForm = styled.form`
   ${searchBarWrapperStyle};
 `;
 
-const DummyWrapper = styled.div<ThemedElement>`
-  ${searchBarWrapperStyle}
-`;
-
-const SearchButtonBase = styled(PhantomButton)<ThemedElement>`
+const SearchButtonBase = styled(PhantomButton)`
   padding: 0.5rem;
   margin: 0;
   touch-action: manipulation;
@@ -195,13 +140,14 @@ const SearchButtonBase = styled(PhantomButton)<ThemedElement>`
   height: 100%;
   width: auto;
   :active:not(:disabled) {
-    background-color: ${({ aemikoTheme }) => aemikoTheme['basic-500']};
+    background-color: #bcc7df;
   }
 `;
 
-const PhantomInput = styled.input<ThemedElement>`
+const PhantomInput = styled.input`
   ${hideBrowserOutline}
-  font-family: ${BODY_FONT_FAMILY.light};
+  font-size: 1rem;
+  font-family: ${FONT_FAMILY.light};
   background: none !important;
   border: none !important;
   outline: none !important;

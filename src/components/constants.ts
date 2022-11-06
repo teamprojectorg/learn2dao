@@ -1,0 +1,1 @@
+export const TABLET_OR_MOBILE_MAX_WIDTH_PX = 750;

@@ -29,6 +29,7 @@ body {
     sans-serif;
   font-style: normal;
   font-weight: 100;
+  background: #f6f9fc;
 }
 
 h1,
@@ -96,4 +97,8 @@ code {
 
 .touch-pan-x {
   touch-action: pan-x;
+}
+
+.fit {
+  width: fit-content;
 }

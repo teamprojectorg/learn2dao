@@ -1,24 +1,30 @@
-import clsx from 'clsx';
-import keyboardKey from 'keyboard-key';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import styled from 'styled-components';
-import { Icon } from '../../Common';
-import { PhantomButton } from '../../PhantomButton';
-import { DomPortal } from '../../Portal';
-import { addEvent, disableBodyScroll, enableBodyScroll, removeEvent } from '../../utils/domUtils';
-import { debugFactory } from '../../utils/utils';
-import { DefaultRenderOption } from '../Library/RenderOption';
-import { FocusHandler, Option, RenderOption, Value } from '../Library/types';
-import useMenu from '../Library/useMenu';
-import { directionMap } from '../utils';
-import { DummySearchBar, SearchBar } from './SearchBar';
-import { OptionFetcher, useSearch } from './useSearch';
+import clsx from "clsx";
+import keyboardKey from "keyboard-key";
+import React, { useCallback, useMemo } from "react";
+import styled from "styled-components";
+import Text from "../Text";
+import { SearchBar } from "./SearchBar";
+import { FocusHandler, Option, RenderOption, Value } from "./types";
+import useMenu from "./useMenu";
+import { OptionFetcher, useSearch } from "./useSearch";
 
-const debug = debugFactory('search');
+const directionMap: Record<number, -1 | 1> = {
+  [keyboardKey.ArrowUp]: -1,
+  [keyboardKey.ArrowDown]: 1,
+};
+
+const DefaultRenderOption: RenderOption<any> = ({ option }) => (
+  <OptText>{option.label}</OptText>
+);
+
+const OptText = styled(Text.bodySmall)`
+  margin: 0;
+  user-select: none;
+`;
 
 export type SearchProps<V extends Value, T> = {
   /** function for fetching data async */
-  dataFetcher?: OptionFetcher<V, T>;
+  dataFetcher: OptionFetcher<V, T>;
   /** callback triggered on search */
   onSearch: (query: string) => void;
   /** placeholder in input */
@@ -41,8 +47,6 @@ export type SearchProps<V extends Value, T> = {
   renderLoading?: () => JSX.Element;
   /* limit number of results shown in dropdown */
   optionLimit?: number;
-  /* is mobile view */
-  mobile?: boolean;
   /* header of the search (logo, etc) */
   header?: React.ReactElement;
 };
@@ -56,16 +60,15 @@ export function Search<V extends Value, T = undefined>({
   closeOnEsc = true,
   disabled,
   className,
-  mobile,
-  header,
-  placeholder = 'Search...',
+  placeholder = "Search...",
   optionLimit: limit,
   renderOption: RenderOpt = DefaultRenderOption,
 }: SearchProps<V, T>) {
-  const { options, loading, error, setQuery, query, moveOptionIdx, optIdx } = useSearch({
-    dataFetcher,
-    limit,
-  });
+  const { options, loading, error, setQuery, query, moveOptionIdx, optIdx } =
+    useSearch({
+      dataFetcher,
+      limit,
+    });
 
   const {
     containerRef,
@@ -74,7 +77,6 @@ export function Search<V extends Value, T = undefined>({
     focus,
     openMenu,
     closeMenu,
-    scrollIntoView,
     onBlurHandler,
     onFocusHandler,
   } = useMenu({
@@ -84,7 +86,6 @@ export function Search<V extends Value, T = undefined>({
     disabled,
   });
 
-  const fullScreen = mobile && open;
   const hasOptions = Boolean(options.length);
 
   const onSelectRaw = useCallback(
@@ -109,7 +110,6 @@ export function Search<V extends Value, T = undefined>({
   }, [query, onSelectRaw]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    debug('onKeydown');
     const code = keyboardKey.getCode(e);
     if (!code) return;
 
@@ -130,7 +130,7 @@ export function Search<V extends Value, T = undefined>({
       return onSelectOption(option);
     }
 
-    if (code === keyboardKey.Escape && !mobile) {
+    if (code === keyboardKey.Escape) {
       if (!closeOnEsc) return;
       e.preventDefault();
       return closeMenu();
@@ -150,19 +150,13 @@ export function Search<V extends Value, T = undefined>({
   const dropdownResults = useMemo(() => {
     if (!open || !hasOptions) return null;
     return (
-      <DropdownMenu
-        ref={menuRef}
-        tabIndex={-1}
-        className={clsx({
-          ['full-screen']: fullScreen,
-        })}
-      >
+      <DropdownMenu ref={menuRef} tabIndex={-1}>
         <ul role="listbox" tabIndex={-1}>
           {options.map((option, idx) => {
             const selected = optIdx === idx;
             return (
               <li
-                className={clsx('option', { selected })}
+                className={clsx("option", { selected })}
                 id={`option-${idx}`}
                 key={option.id}
                 role="option"
@@ -170,7 +164,7 @@ export function Search<V extends Value, T = undefined>({
                 aria-label={option.label}
                 aria-selected={selected}
                 tabIndex={-1}
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
                   setQuery(option.label);
                   onSelectOption(option);
@@ -183,12 +177,16 @@ export function Search<V extends Value, T = undefined>({
         </ul>
       </DropdownMenu>
     );
-  }, [open, hasOptions, menuRef, fullScreen, options, optIdx, RenderOpt, onSelectOption, setQuery]);
-
-  useEffect(() => {
-    if (mobile) return;
-    scrollIntoView(`#option-${optIdx}`);
-  }, [optIdx, mobile]);
+  }, [
+    open,
+    hasOptions,
+    menuRef,
+    options,
+    optIdx,
+    RenderOpt,
+    onSelectOption,
+    setQuery,
+  ]);
 
   const formClasses = clsx(className, {
     error,
@@ -197,46 +195,18 @@ export function Search<V extends Value, T = undefined>({
     focus,
   });
 
-  if (mobile) {
-    return (
-      <>
-        <DummySearchBar
-          className={formClasses}
-          query={query}
-          onSubmit={onSubmit}
-          onClick={() => openMenu()}
-          disabled={disabled}
-          placeholder={placeholder}
-        />
-        <FullScreen isOpen={open} onClose={() => closeMenu()} header={header}>
-          <div className="ph3">
-            <SearchBar
-              className={formClasses}
-              onSubmit={onSubmit}
-              query={query}
-              onQueryChange={setQuery}
-              placeholder={placeholder}
-              disabled={disabled}
-              focusOnMount
-            />
-            {dropdownResults}
-          </div>
-        </FullScreen>
-      </>
-    );
-  }
-
   return (
-    <Wrapper
+    <div
+      className="pa0 ma0"
       ref={containerRef}
       tabIndex={0}
-      className="relative"
+      style={{ position: "relative" }}
       /* TODO: not sure if these should be here. this needs some tweaking HANDE FULL ON FOCUS */
-      onFocus={e => onFocusHandler(e)}
-      onBlur={e => onBlurHandler(e)}
+      onFocus={(e) => onFocusHandler(e)}
+      onBlur={(e) => onBlurHandler(e)}
     >
       <SearchBar
-        className={clsx('bg-white', formClasses)}
+        className={clsx("bg-white", formClasses)}
         onSubmit={onSubmit}
         onKeyDown={onKeyDown}
         onClick={() => openMenu()}
@@ -246,72 +216,9 @@ export function Search<V extends Value, T = undefined>({
         disabled={disabled}
       />
       {dropdownResults}
-    </Wrapper>
+    </div>
   );
 }
-
-type FullProps = {
-  isOpen?: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  header?: React.ReactElement;
-};
-
-export const FullScreen = ({ isOpen, onClose, children, header }: FullProps) => {
-  const fullScreenRef = useRef<HTMLDivElement | null>(null);
-
-  const onCloseLocal = useCallback(() => {
-    if (fullScreenRef.current) {
-      enableBodyScroll(fullScreenRef.current);
-    }
-    onClose();
-  }, [onClose, fullScreenRef.current]);
-
-  useEffect(() => {
-    if (fullScreenRef.current) {
-      disableBodyScroll(fullScreenRef.current);
-    }
-  }, [isOpen, fullScreenRef]);
-
-  useEffect(() => {
-    const closeOnEsc = (e: React.KeyboardEvent) => {
-      const code = keyboardKey.getCode(e);
-      if (!code) return;
-      if (code === keyboardKey.Escape) {
-        e.preventDefault();
-        onCloseLocal();
-      }
-    };
-    addEvent(document.body, 'keydown', closeOnEsc);
-    return () => removeEvent(document.body, 'keydown', closeOnEsc);
-  }, [onCloseLocal]);
-
-  return (
-    <DomPortal wrapperId="search-portal">
-      {isOpen && (
-        <FullScreenContainer ref={fullScreenRef}>
-          <div className="flex flex-row justify-between items-center mb3 ph3">
-            {/*
-             * nb1 since the close button has a 24x24 box
-             * around it and causes some issues alligning
-             * with the header icon
-             */}
-            <PhantomButton onClick={() => onCloseLocal()} className="nb1">
-              <Icon.close size="2rem" />
-            </PhantomButton>
-            {header && (
-              <>
-                <div>{header}</div>
-                <div style={{ width: '2rem' }} />
-              </>
-            )}
-          </div>
-          {children}
-        </FullScreenContainer>
-      )}
-    </DomPortal>
-  );
-};
 
 const DropdownMenu = styled.div`
   top: calc(100% + 0.25rem);
@@ -320,17 +227,11 @@ const DropdownMenu = styled.div`
   z-index: 10;
   background-color: white;
 
-  &:not(.full-screen) {
-    position: absolute;
-    max-height: 30rem;
-    overflow-y: scroll;
-    border-radius: 0.25rem;
-    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
-  }
-  &.full-screen {
-    margin: 1rem 0 2rem 0;
-    height: 100%;
-  }
+  position: absolute;
+  max-height: 30rem;
+  overflow-y: scroll;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
 
   & ul {
     list-style: none;
@@ -356,20 +257,4 @@ const DropdownMenu = styled.div`
       }
     }
   }
-`;
-
-const Wrapper = styled.div`
-  margin: 0;
-  padding: 0;
-`;
-
-const FullScreenContainer = styled.div`
-  overflow: auto;
-  position: absolute;
-  z-index: 999;
-  inset: 0;
-  background: white;
-  margin: auto;
-  display: block;
-  padding: 1.5rem 0;
 `;

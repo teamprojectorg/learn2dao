@@ -7,7 +7,7 @@ type Color =
   | "black"
   | "white";
 
-const FONT_FAMILY = {
+export const FONT_FAMILY = {
   light: "LabGrotesque-Light",
   regular: "LabGrotesque-Regular",
   italic: "LabGrotesque-Italic",
@@ -141,6 +141,10 @@ const bodyBig = styled(body)`
   font-size: 1.25em;
 `;
 
+const bodyBigger = styled(body)`
+  font-size: 2em;
+`;
+
 const caption = styled(body)`
   font-size: 0.75em;
   line-height: 0.9375em;
@@ -213,6 +217,15 @@ const linkSmall = styled(Link)<TextProps>`
   font-size: 0.875em;
 `;
 
+export const hideBrowserOutline = css`
+  outline: none;
+
+  :active,
+  :focus {
+    outline: none;
+  }
+`;
+
 const Text = {
   h1,
   h2,
@@ -225,6 +238,7 @@ const Text = {
   bodyItalic,
   bodyBold,
   bodyBig,
+  bodyBigger,
   bodySmall,
   bodySmallBold,
   label,

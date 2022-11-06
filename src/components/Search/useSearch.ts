@@ -1,14 +1,14 @@
-import debounce from 'lodash/debounce';
-import identityFn from 'lodash/identity';
-import { useCallback, useEffect, useState } from 'react';
-import { useLRUCache } from '../../Hooks/useCache';
-import { Option } from '../Library/types';
-import useOptions from '../Library/useOptions';
+import debounce from "lodash/debounce";
+import { useCallback, useEffect, useState } from "react";
+import useOptions from "./useOptions";
+import { Option } from "./types";
 
-export type OptionFetcher<V, T = undefined> = (query: string) => Promise<Option<V, T>[]>;
+export type OptionFetcher<V, T = undefined> = (
+  query: string
+) => Promise<Option<V, T>[]>;
 
 export type HookProperties<V, T = undefined> = {
-  dataFetcher?: OptionFetcher<V, T>;
+  dataFetcher: OptionFetcher<V, T>;
   limit?: number;
 };
 
@@ -19,18 +19,20 @@ export function useSearch<V, T = undefined>({
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState<string | null>(null);
-  const { options, setOptions, moveOptionIdx, optIdx } = useOptions<V, T>({ options: [] });
-
-  const cachedFetch = useLRUCache({ dataFetcher, keyGenerator: identityFn });
+  const { options, setOptions, moveOptionIdx, optIdx } = useOptions<V, T>({
+    options: [],
+  });
 
   const onSetQuery = useCallback(
     debounce(async (query: string) => {
       if (!query || query.length < 2) return;
       try {
         setLoading(true);
-        const options = await cachedFetch(query);
+        const options = await dataFetcher(query);
         if (options) {
-          setOptions(options.length > limit ? options.slice(0, limit) : options);
+          setOptions(
+            options.length > limit ? options.slice(0, limit) : options
+          );
         }
       } catch (e) {
         setError(e);
