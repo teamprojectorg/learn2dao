@@ -75,9 +75,9 @@ const Visuals = () => {
         gridTemplateColumns="1fr 200px"
         className="mb4"
       >
-        <DisplayBox className="flex flex-row justify-between">
+        <DisplayBox className="flex flex-row items-center justify-between">
           <Text.h2>{fromHardCoded.name}</Text.h2>
-          <div className="mt3 flex flex-row flex-wrap gap-3">
+          <div className="flex flex-row flex-wrap gap-3">
             {fromHardCoded.tags.map((t) => (
               <Tag text={t.text} color={t.color} tone="dark" />
             ))}
