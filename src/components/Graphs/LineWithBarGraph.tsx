@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Bar,
+  Brush,
   CartesianGrid,
   ComposedChart,
   Label,
@@ -105,6 +106,9 @@ function LineWithBarGraph<
           strokeWidth="4px"
         />
         {children}
+        {xAxis && (
+          <Brush dataKey={xAxis.dataKey as any} height={30} stroke="#8884d8" />
+        )}
       </ComposedChart>
     </ResponsiveContainer>
   );

@@ -4,6 +4,7 @@ import {
   BarChart,
   CartesianGrid,
   Label,
+  Legend,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -51,7 +52,8 @@ function BarGraph<
             dataKey={xAxis.dataKey as any}
             domain={["dataMin", "dataMax"]}
             tickFormatter={xAxis.formatter as any}
-            ticks={xAxis.ticks}
+            padding={{ left: 10, right: 10 }}
+            //ticks={xAxis.ticks}
           >
             {xAxis.label && (
               <Label
@@ -62,6 +64,11 @@ function BarGraph<
             )}
           </XAxis>
         )}
+        <Legend
+          content={(p) => {
+            return <div className="mt3" />;
+          }}
+        />
         {yAxis && (
           <YAxis
             type={yAxis.type}
