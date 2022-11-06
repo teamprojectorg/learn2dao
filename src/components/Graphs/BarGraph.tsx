@@ -15,6 +15,7 @@ type Axis<T, X extends keyof T> = {
   label?: string;
   formatter?: (tick: T[X]) => React.ReactNode;
   ticks?: (string | number)[];
+  minMax?: boolean;
 };
 
 type BarGraphProps<T, X extends keyof T, Y extends keyof T> = {
@@ -66,6 +67,7 @@ function BarGraph<
             type={yAxis.type}
             tickFormatter={yAxis.formatter as any}
             ticks={yAxis.ticks}
+            domain={yAxis.minMax ? ["dataMin", "dataMax"] : undefined}
           >
             {yAxis.label && (
               <Label

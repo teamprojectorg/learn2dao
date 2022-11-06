@@ -1,4 +1,6 @@
 import { Tag } from "@web3uikit/core";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Text from "./Text";
 
@@ -15,15 +17,26 @@ type Color =
 type DAOInfoProps = {
   logoUrl: string;
   name: string;
-  governanceContract: string;
+  governanceContractAddress: string;
   tags?: { text: string; color: Color }[];
 };
 
-const DAOInfo = ({ logoUrl, name, governanceContract, tags }: DAOInfoProps) => {
+const DAOInfo = ({
+  logoUrl,
+  name,
+  governanceContractAddress,
+  tags,
+}: DAOInfoProps) => {
+  const navigate = useNavigate();
+  const goToPage = useCallback(() => {
+    navigate(`/info/${governanceContractAddress}`);
+  }, [navigate]);
   return (
     <div className="flex flex-column items-center">
-      <ImageCard src={logoUrl} />
-      <Text.bodyBigger className="mt3 tc">{name}</Text.bodyBigger>
+      <ImageCard onClick={goToPage} src={logoUrl} />
+      <Text.bodyBigger onClick={goToPage} className="pointer mt3 tc">
+        {name}
+      </Text.bodyBigger>
       {tags && (
         <div className="mt3 flex flex-row flex-wrap gap-3">
           {tags.map((t) => (

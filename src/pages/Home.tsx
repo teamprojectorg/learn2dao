@@ -3,6 +3,7 @@ import Flex from "../components/Flex";
 import { Search } from "../components/Search";
 import Text from "../components/Text";
 import { GridUnlessMobile, MaxWidth } from "../components/Width";
+import { hardcoded } from "../hardcoded";
 
 const Home = () => (
   <div className="pa2">
@@ -18,6 +19,7 @@ const Home = () => (
     </div>
     <MaxWidth $maxWidth="50rem" className="center">
       <Search
+        placeholder="Seach by ENS or Governance Contract (ERC721/ERC20/ERC1155)"
         className="mv4"
         dataFetcher={() => Promise.resolve([])}
         onSearch={() => console.log("search")}
@@ -25,33 +27,15 @@ const Home = () => (
     </MaxWidth>
     <Text.h1 className="mb4">Popular DAOs</Text.h1>
     <GridUnlessMobile gridTemplateColumns="1fr 1fr 1fr">
-      <DAOInfo
-        logoUrl="/assets/bit-coin.png"
-        governanceContract=""
-        name="BitDAO"
-        tags={[
-          { text: "Social Good", color: "green" },
-          { text: "Web3 Grants", color: "blue" },
-        ]}
-      />
-      <DAOInfo
-        logoUrl="/assets/git-coin.png"
-        governanceContract=""
-        name="GitCoin"
-        tags={[
-          { text: "Social Good", color: "green" },
-          { text: "Web3 Grants", color: "blue" },
-        ]}
-      />
-      <DAOInfo
-        logoUrl="/assets/ape-coin.png"
-        governanceContract=""
-        name="ApeCoin"
-        tags={[
-          { text: "NFTs", color: "purple" },
-          { text: "Social Good", color: "green" },
-        ]}
-      />
+      {hardcoded.map((h) => (
+        <DAOInfo
+          key={h.governanceContractAddress}
+          logoUrl={h.logoUrl}
+          name={h.name}
+          tags={h.tags as any}
+          governanceContractAddress={h.governanceContractAddress}
+        />
+      ))}
     </GridUnlessMobile>
   </div>
 );

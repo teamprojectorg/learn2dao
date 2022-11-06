@@ -23,7 +23,7 @@ export type LinkButtonProps = TextProps;
 const textStyle = css<TextProps>`
   font-family: ${FONT_FAMILY.regular};
   font-size: 1em;
-  line-height: 1.25em;
+  line-height: 1.5em;
   color: ${({ $color = "#000" }) => $color};
   &.light {
     font-family: ${FONT_FAMILY.light};
