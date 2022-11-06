@@ -104,8 +104,8 @@ const snapshot_query_space = {
     let unique_member_count = 0;
     if (space_data["space"]["id"].includes('apecoin')) {
         unique_member_count = 7700
-    } else if (space_data["space"]["id"].includes('ens')) {
-        unique_member_count = 76000
+    } else if (space_data["space"]["id"].includes('bitdao')) {
+        unique_member_count = 5600
     } else if (space_data["space"]["id"].includes('gitcoindao')) {
         unique_member_count = 63000
     }
